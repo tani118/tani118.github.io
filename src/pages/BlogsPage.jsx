@@ -44,13 +44,31 @@ const BlogsPage = () => {
           const contentWithoutTitle = content.replace(/^#\s+.+$/m, '');
           const preview = contentWithoutTitle.slice(0, 150).replace(/[#*`]/g, '') + '...';
           
+          // Fetch last commit date
+          let date = new Date().toLocaleDateString();
+          try {
+            const commitRes = await fetch(`https://api.github.com/repos/tani118/my-blogs/commits?path=${file.path}&page=1&per_page=1`);
+            if (commitRes.ok) {
+              const commitData = await commitRes.json();
+              if (commitData.length > 0) {
+                date = new Date(commitData[0].commit.committer.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                });
+              }
+            }
+          } catch (e) {
+            console.warn('Failed to fetch commit date for', file.name, e);
+          }
+
           return {
             id: index + 1,
             slug,
             title,
             content,
             preview,
-            date: new Date().toLocaleDateString(), // You might want to fetch commit date
+            date,
             download_url: file.download_url
           };
         });
