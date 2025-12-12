@@ -122,7 +122,7 @@ const BlogsPage = () => {
                     </code>
                   </div>
                 ) : (
-                  <code className="bg-sepia-200 dark:bg-sepia-800 px-1 py-0.5 rounded text-sm font-mono" {...props}>
+                  <code className="bg-sepia-200 dark:bg-sepia-800 px-1 py-0.5 rounded text-sm font-serif italic" {...props}>
                     {children}
                   </code>
                 )
@@ -150,7 +150,7 @@ const BlogsPage = () => {
             <h2 className="text-2xl font-bold italic mb-2 group-hover:text-sepia-600 dark:group-hover:text-sepia-400 transition-colors">
               {blog.title}
             </h2>
-            <div className="text-sm opacity-50 mb-3 italic font-mono">{blog.date}</div>
+            <div className="text-sm opacity-50 mb-3 italic font-serif">{blog.date}</div>
             <p className="opacity-80 leading-relaxed font-serif">
               {blog.preview}
             </p>

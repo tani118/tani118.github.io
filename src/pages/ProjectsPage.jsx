@@ -54,7 +54,7 @@ const ProjectsPage = () => {
               <h3 className="text-2xl font-bold italic group-hover:text-sepia-600 dark:group-hover:text-sepia-400 transition-colors">
                 {project.title}
               </h3>
-              <div className="flex gap-4 mt-2 md:mt-0 font-mono text-sm opacity-60">
+              <div className="flex gap-4 mt-2 md:mt-0 font-serif italic text-sm opacity-60">
                 {project.github && (
                   <a 
                     href={project.github}

@@ -58,7 +58,7 @@ const Contact = ({ isHovered }) => {
   return (
     <section className="mt-40">
       <div className="flex flex-col items-center">
-        <h2 className={`font-mono text-4xl font-bold mb-16 transition-colors duration-300 ${
+        <h2 className={`font-serif italic text-4xl font-bold mb-16 transition-colors duration-300 ${
           isHovered ? 'text-black' : 'text-white'
         }`}>
           Contact
@@ -70,7 +70,7 @@ const Contact = ({ isHovered }) => {
             <div>
               <label 
                 htmlFor="name" 
-                className={`font-mono text-sm mb-2 block transition-colors duration-300 ${
+                className={`font-serif italic text-sm mb-2 block transition-colors duration-300 ${
                   isHovered ? 'text-black' : 'text-white'
                 }`}
               >
@@ -83,7 +83,7 @@ const Contact = ({ isHovered }) => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className={`w-full p-3 bg-transparent border-2 font-mono text-base transition-all duration-300 focus:outline-none focus:ring-2 ${
+                className={`w-full p-3 bg-transparent border-2 font-serif italic text-base transition-all duration-300 focus:outline-none focus:ring-2 ${
                   isHovered 
                     ? 'border-gray-400 text-black placeholder-gray-600 focus:border-black focus:ring-black/20' 
                     : 'border-gray-600 text-white placeholder-gray-400 focus:border-white focus:ring-white/20'
@@ -95,7 +95,7 @@ const Contact = ({ isHovered }) => {
             <div>
               <label 
                 htmlFor="contact" 
-                className={`font-mono text-sm mb-2 block transition-colors duration-300 ${
+                className={`font-serif italic text-sm mb-2 block transition-colors duration-300 ${
                   isHovered ? 'text-black' : 'text-white'
                 }`}
               >
@@ -107,7 +107,7 @@ const Contact = ({ isHovered }) => {
                 name="contact"
                 value={formData.contact}
                 onChange={handleChange}
-                className={`w-full p-3 bg-transparent border-2 font-mono text-base transition-all duration-300 focus:outline-none focus:ring-2 ${
+                className={`w-full p-3 bg-transparent border-2 font-serif italic text-base transition-all duration-300 focus:outline-none focus:ring-2 ${
                   isHovered 
                     ? 'border-gray-400 text-black placeholder-gray-600 focus:border-black focus:ring-black/20' 
                     : 'border-gray-600 text-white placeholder-gray-400 focus:border-white focus:ring-white/20'
@@ -120,7 +120,7 @@ const Contact = ({ isHovered }) => {
             <div>
               <label 
                 htmlFor="message" 
-                className={`font-mono text-sm mb-2 block transition-colors duration-300 ${
+                className={`font-serif italic text-sm mb-2 block transition-colors duration-300 ${
                   isHovered ? 'text-black' : 'text-white'
                 }`}
               >
@@ -133,7 +133,7 @@ const Contact = ({ isHovered }) => {
                 onChange={handleChange}
                 required
                 rows={5}
-                className={`w-full p-3 bg-transparent border-2 font-mono text-base resize-none transition-all duration-300 focus:outline-none focus:ring-2 ${
+                className={`w-full p-3 bg-transparent border-2 font-serif italic text-base resize-none transition-all duration-300 focus:outline-none focus:ring-2 ${
                   isHovered 
                     ? 'border-gray-400 text-black placeholder-gray-600 focus:border-black focus:ring-black/20' 
                     : 'border-gray-600 text-white placeholder-gray-400 focus:border-white focus:ring-white/20'
@@ -147,7 +147,7 @@ const Contact = ({ isHovered }) => {
               <button
                 type="submit"
                 disabled={isSubmitting || !formData.name.trim() || !formData.message.trim()}
-                className={`font-mono text-base px-8 py-3 border-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`font-serif italic text-base px-8 py-3 border-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
                   isHovered 
                     ? 'border-black text-black hover:bg-black hover:text-white disabled:hover:bg-transparent disabled:hover:text-black' 
                     : 'border-white text-white hover:bg-white hover:text-black disabled:hover:bg-transparent disabled:hover:text-white'
@@ -157,12 +157,12 @@ const Contact = ({ isHovered }) => {
               </button>
 
               {submitStatus === 'success' && (
-                <span className={`font-mono text-sm ${isHovered ? 'text-green-600' : 'text-green-400'}`}>
+                <span className={`font-serif italic text-sm ${isHovered ? 'text-green-600' : 'text-green-400'}`}>
                   Message sent successfully!
                 </span>
               )}
               {submitStatus === 'error' && (
-                <span className={`font-mono text-sm ${isHovered ? 'text-red-600' : 'text-red-400'}`}>
+                <span className={`font-serif italic text-sm ${isHovered ? 'text-red-600' : 'text-red-400'}`}>
                   Please fill required fields
                 </span>
               )}

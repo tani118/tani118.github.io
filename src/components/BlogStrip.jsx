@@ -64,31 +64,31 @@ const BlogStrip = ({ blogs, onBlogClick, isHovered }) => {
       style={{ pointerEvents: 'auto' }}
     >
       <div className="flex items-start justify-between mb-3">
-        <h3 className={`font-mono text-lg font-semibold transition-colors duration-300 ${
+        <h3 className={`font-serif italic text-lg font-semibold transition-colors duration-300 ${
           isHovered ? 'text-black group-hover:text-white' : 'text-white group-hover:text-black'
         }`}>
           {blog.title}
         </h3>
-        <span className={`font-mono text-xs transition-colors duration-300 ${
+        <span className={`font-serif italic text-xs transition-colors duration-300 ${
           isHovered ? 'text-blue-600 group-hover:text-blue-400' : 'text-blue-400 group-hover:text-blue-600'
         }`}>
           BLOG
         </span>
       </div>
       
-      <p className={`font-mono text-sm leading-relaxed mb-4 transition-colors duration-300 ${
+      <p className={`font-serif italic text-sm leading-relaxed mb-4 transition-colors duration-300 ${
         isHovered ? 'text-gray-700 group-hover:text-gray-300' : 'text-gray-300 group-hover:text-gray-700'
       }`}>
         {blog.preview}
       </p>
       
       <div className="flex justify-between items-center">
-        <span className={`font-mono text-xs transition-colors duration-300 ${
+        <span className={`font-serif italic text-xs transition-colors duration-300 ${
           isHovered ? 'text-gray-600 group-hover:text-gray-400' : 'text-gray-400 group-hover:text-gray-600'
         }`}>
           {blog.date}
         </span>
-        <span className={`font-mono text-xs underline transition-colors duration-300 ${
+        <span className={`font-serif italic text-xs underline transition-colors duration-300 ${
           isHovered ? 'text-blue-600 group-hover:text-blue-400' : 'text-blue-400 group-hover:text-blue-600'
         }`}>
           Read more →
