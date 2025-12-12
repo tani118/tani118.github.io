@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkEmoji from 'remark-emoji';
@@ -11,6 +12,8 @@ const BlogsPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [error, setError] = useState(null);
+  const { blogId } = useParams();
+  const navigate = useNavigate();
 
   const GITHUB_API = 'https://api.github.com/repos/tani118/my-blogs/contents';
 
@@ -22,10 +25,12 @@ const BlogsPage = () => {
         
         const data = await response.json();
         
-        // Filter for markdown files
-        const markdownFiles = data.filter(file => file.name.endsWith('.md'));
+        // Filter for markdown files and sort them to ensure consistent IDs
+        const markdownFiles = data
+          .filter(file => file.name.endsWith('.md'))
+          .sort((a, b) => a.name.localeCompare(b.name));
         
-        const blogPromises = markdownFiles.map(async (file) => {
+        const blogPromises = markdownFiles.map(async (file, index) => {
           const contentRes = await fetch(file.download_url);
           const content = await contentRes.text();
           
@@ -33,13 +38,15 @@ const BlogsPage = () => {
           // This is a basic implementation, you might want to use a proper frontmatter parser
           const titleMatch = content.match(/^#\s+(.+)$/m);
           const title = titleMatch ? titleMatch[1] : file.name.replace('.md', '');
+          const slug = file.name.replace('.md', '');
           
           // Remove title from preview
           const contentWithoutTitle = content.replace(/^#\s+.+$/m, '');
           const preview = contentWithoutTitle.slice(0, 150).replace(/[#*`]/g, '') + '...';
           
           return {
-            id: file.sha,
+            id: index + 1,
+            slug,
             title,
             content,
             preview,
@@ -61,6 +68,22 @@ const BlogsPage = () => {
     fetchBlogs();
   }, []);
 
+  useEffect(() => {
+    if (!loading && blogs.length > 0) {
+      if (blogId) {
+        const blog = blogs.find(b => String(b.id) === blogId);
+        if (blog) {
+          setSelectedBlog(blog);
+        } else {
+          // Handle 404 or redirect
+          navigate('/blogs');
+        }
+      } else {
+        setSelectedBlog(null);
+      }
+    }
+  }, [blogId, blogs, loading, navigate]);
+
   if (loading) {
     return <div className="text-center italic opacity-60 mt-20">Loading thoughts...</div>;
   }
@@ -73,7 +96,7 @@ const BlogsPage = () => {
     return (
       <div className="animate-fade-in">
         <button 
-          onClick={() => setSelectedBlog(null)}
+          onClick={() => navigate('/blogs')}
           className="mb-8 text-sm italic hover:underline underline-offset-4 opacity-60 hover:opacity-100 transition-opacity"
         >
           ← Back to all blogs
@@ -122,7 +145,7 @@ const BlogsPage = () => {
           <div 
             key={blog.id} 
             className="group cursor-pointer"
-            onClick={() => setSelectedBlog(blog)}
+            onClick={() => navigate(`/blog/${blog.id}`)}
           >
             <h2 className="text-2xl font-bold italic mb-2 group-hover:text-sepia-600 dark:group-hover:text-sepia-400 transition-colors">
               {blog.title}
@@ -133,7 +156,7 @@ const BlogsPage = () => {
             </p>
             <div className="mt-4">
               <span className="text-sm italic underline underline-offset-4 opacity-60 group-hover:opacity-100 transition-opacity">
-                Read more
+                <br></br>
               </span>
             </div>
           </div>

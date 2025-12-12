@@ -42,7 +42,13 @@ const ProjectsPage = () => {
         {projects.map((project, index) => (
           <div 
             key={index}
-            className="group border-b border-sepia-900/10 dark:border-sepia-100/10 pb-8 last:border-0"
+            className="group border-b border-sepia-900/10 dark:border-sepia-100/10 pb-8 last:border-0 cursor-pointer"
+            onClick={(e) => {
+              // Don't trigger if clicking directly on the action links
+              if (e.target.tagName === 'A') return;
+              const link = project.live || project.github;
+              if (link) window.open(link, '_blank');
+            }}
           >
             <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-2">
               <h3 className="text-2xl font-bold italic group-hover:text-sepia-600 dark:group-hover:text-sepia-400 transition-colors">
