@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-sepia-100 text-sepia-900 transition-colors duration-500;
+  }
+  .dark body {
+    @apply bg-sepia-900 text-sepia-100;
+  }
+}
+
+/* Custom scrollbar for Webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-sepia-50 dark:bg-sepia-950;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-sepia-300 dark:bg-sepia-700 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-sepia-400 dark:bg-sepia-600;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

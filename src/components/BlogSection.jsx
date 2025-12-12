@@ -8,8 +8,7 @@ const BlogSection = ({ isHovered, onViewChange }) => {
   const [selectedBlog, setSelectedBlog] = useState(null);
   const [showAllBlogs, setShowAllBlogs] = useState(false);
 
-  // GitHub API configuration for private repo
-  const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN; // Store in .env file
+  // GitHub API configuration for public repo (no authentication needed)
   const GITHUB_API = 'https://api.github.com/repos/tani118/my-blogs/contents';
 
   // Notify parent component about view changes
@@ -511,12 +510,15 @@ These features have become essential tools in modern JavaScript development. Mas
       try {
         console.log('Starting blog loading process...');
         
-        // Fetch blogs from GitHub
-        console.log('Fetching blogs from GitHub...');
+        // Fetch blogs from public GitHub repository
+        console.log('Fetching blogs from public GitHub repo...');
         await fetchBlogs();
         
       } catch (error) {
         console.error('Error loading blogs:', error);
+        // Fallback to sample data
+        console.log('Using sample blogs as fallback');
+        setBlogs(sampleBlogs);
       } finally {
         console.log('Blog loading complete');
         setLoading(false);
@@ -525,11 +527,10 @@ These features have become essential tools in modern JavaScript development. Mas
 
     const fetchBlogs = async () => {
       try {
-        console.log('GitHub Token:', GITHUB_TOKEN ? 'Token found' : 'Token missing');
+        console.log('Fetching from public repository...');
         
         const response = await fetch(GITHUB_API, {
           headers: {
-            'Authorization': `token ${GITHUB_TOKEN}`,
             'Accept': 'application/vnd.github.v3+json',
           },
         });
@@ -539,11 +540,11 @@ These features have become essential tools in modern JavaScript development. Mas
         }
 
         const files = await response.json();
-        console.log('Files found:', files.length); // Debug log
+        console.log('Files found:', files.length);
         const markdownFiles = files.filter(file => file.name.endsWith('.md') && file.name !== 'README.md');
-        console.log('Markdown files:', markdownFiles.map(f => f.name)); // Debug log
+        console.log('Markdown files:', markdownFiles.map(f => f.name));
         
-        // Fetch content for each markdown file with better error handling
+        // Fetch content for each markdown file
         const blogPromises = markdownFiles.map(async (file, index) => {
           try {
             console.log(`Fetching blog ${index + 1}/${markdownFiles.length}: ${file.name}`);
@@ -555,7 +556,6 @@ These features have become essential tools in modern JavaScript development. Mas
             
             const contentResponse = await fetch(`https://api.github.com/repos/tani118/my-blogs/contents/${file.name}`, {
               headers: {
-                'Authorization': `token ${GITHUB_TOKEN}`,
                 'Accept': 'application/vnd.github.v3+json',
               },
             });
@@ -603,7 +603,7 @@ These features have become essential tools in modern JavaScript development. Mas
             return blog;
           } catch (error) {
             console.error(`Error fetching content for ${file.name}:`, error);
-            return null; // Return null for failed fetches
+            return null;
           }
         });
 
@@ -624,9 +624,7 @@ These features have become essential tools in modern JavaScript development. Mas
         }
       } catch (error) {
         console.error('Error fetching blogs:', error);
-        // Fallback to sample data
-        console.log('Using sample blogs as fallback');
-        setBlogs(sampleBlogs);
+        throw error; // Re-throw to be caught by loadData
       }
     };
 
