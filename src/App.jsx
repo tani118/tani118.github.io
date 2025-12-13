@@ -18,6 +18,7 @@ function App() {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/blogs" element={<BlogsPage />} />
           <Route path="/blog/:blogId" element={<BlogsPage />} />
+          <Route path="/blogs/:blogId" element={<BlogsPage />} />
         </Routes>
       </Layout>
     </Router>
